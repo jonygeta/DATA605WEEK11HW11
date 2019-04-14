@@ -1,0 +1,76 @@
+---
+title: "Data 605 HW 11"
+author: "Yohannes Deboch"
+date: "04/04/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Using the “cars” dataset in R, build a linear model for stopping distance as a function of speed and replicate the analysis of your textbook chapter 3 (visualization, quality evaluation of the model, and residual analysis.)
+
+Answer:
+
+## Load the libraries
+
+```{r}
+library(tidyverse)
+```
+## Get an overview of data
+```{r}
+glimpse(cars)
+```
+There are 50 observations and 2 variables . Speed and dist are double.
+
+Summary Statistics
+
+```{r}
+summary(cars)
+```
+
+There are no outlier in the data. 
+
+## Correlation between the variables
+```{r}
+cor(cars)
+```
+
+## Plot the data
+```{r}
+plot(cars$speed,cars$dist,type='p',main="Speed VS Distance")
+```
+The correlation between sped distance is strong and positive.
+
+## Lienar Model
+### Fit the model
+
+We fitted a linear model of distance as a function f speed . Speed is the dependent and dist is the independent variable.
+
+```{r}
+fit <- lm(dist ~ speed, data = cars)
+summary(fit)
+```
+
+Fitted regression model: $distance_{i} =  -17.5791 + 3.9324 * speed_{i}$
+
+For 1 unit increase in speed distance traveled increases by 3.9324  units.
+### Model Summary:
+1. The model explains 65.11% variability in distance due to speed.
+2. Speed is significant predictor of distance at 5% level of significant since the p value 1.49e-12 is less than 0.05.
+3. The model is a valid model since the F statistics p value  1.49e-12 is less than 0.05 at 5% level of significance. 
+
+## Residual Analysis
+
+```{r}
+par(mfrow=c(2,2))
+plot(fit)
+```
+
+From the residual vs fitted value plot we can see the there is no pattern in the data hence the data randomness of the residuals and heteroscidatcity is satisfied.
+
+From the normal q-q plot we can see that the residuals are Approximately normally distribute.
+
+## Conclusion
+From the overall analysis we can say that speed is a good predictor of distance and our model is a well fitted model since the assumptions of the linear regression model are satisfied here.
